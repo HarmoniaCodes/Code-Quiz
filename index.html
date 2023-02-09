@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Quiz Challenge</title>
+    <!-- Load Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Load styles -->
+    <link rel="stylesheet" href="./styles.css">
+    <!-- Load JS -->
+    <script async src="./script.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="#">View High Scores</a>
+        </nav>
+        <div class="timeLeftCounter">
+            Time: 0
+        </div>
+    </header>
+    <main>
+        <section class="startPage">
+            <h1>Coding Quiz Challenge</h1>
+            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect
+                answers
+                will penalize your score/time by ten seconds!</p>
+            <button>Start Quiz</button>
+        </section>
+        <hr>
+        <section class="quizQuestion">
+            <h2>Commonly Used Data Types DO NOT include:</h2>
+            <button>1. Strings</button>
+            <button>1. Strings</button>
+            <button>1. Strings</button>
+            <button>1. Strings</button>
+        </section>
+        <figcaption class="answerResult">
+            <hr>
+            <span>Wrong!</span>
+            <span>Correct!</span>
+        </figcaption>
+        <hr>
+        <section class="resultsPage">
+            <h2>All Done!</h2>
+            <span>Your final score is 22.</span><br />
+            <form>
+                <label for="initials">Enter your initials:</label>
+                <input type="text" id="initials" />
+                <button>Submit</button>
+            </form>
+        </section>
+        <hr>
+        <section class="highScores">
+            <h2>High Scores</h2>
+            <div class="scoresList">
+                <span>1. AB - 22</span>
+                <span>2. NJ - 21</span>
+                <span>2. NJ - 21</span>
+            </div>
+            <button>Go Back</button><button>Clear High Scores</button>
+        </section>
+    </main>
+
+</body>
+
+</html>

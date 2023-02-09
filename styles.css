@@ -1,0 +1,89 @@
+:root {
+    --purple: #332273;
+    --lightPurple: #D6D2E8;
+    --pink: #A860E2;
+    --gray: #AAAAAA;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+}
+a {
+    color: var(--pink);
+    text-decoration: none;
+}
+/* Start Page Styling */
+
+.startPage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-inline: 2rem;
+}
+.startPage p{
+    max-width:40rem;
+}
+/* Default Button Styling */
+
+button {
+    width: fit-content;
+    background-color: var(--purple);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    color:white;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+}
+button:hover {
+    background-color: var(--pink);
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+/* Question Page Styling */
+.quizQuestion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+h2 .quizQuestion {
+    font-size: 3rem;
+    font-weight: 500;
+}
+.quizQuestion button {
+    text-align:left;
+    width: 10rem;
+    background-color: var(--purple);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    color:white;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+}
+.quizQuestion button:hover {
+    background-color: var(--pink);
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+/* Answer result styling */
+.answerResult {
+    color: var(--gray);
+    font-style: italic;
+}
+.answerResult hr {
+    background-color: var(--gray);
+    border: none;
+    height:1px;
+}
+.scoresList {
+display: flex;
+flex-direction: column;
+}
+.highScores span:nth-child(even) {
+    background-color: var(--lightPurple);
+}
