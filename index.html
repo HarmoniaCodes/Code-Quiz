@@ -26,7 +26,7 @@
         </div>
     </header>
     <main>
-        <section class="quizContent">
+        <section class="startPage">
             <h1>Coding Quiz Challenge</h1>
             <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect
                 answers
@@ -49,14 +49,22 @@
         <hr>
         <section class="resultsPage">
             <h2>All Done!</h2>
-            <span>Your final score is 22.</span>
-            <input type="text" /> <button>Submit</button>
+            <span>Your final score is 22.</span><br />
+            <form>
+                <label for="initials">Enter your initials:</label>
+                <input type="text" id="initials" />
+                <button>Submit</button>
+            </form>
         </section>
         <hr>
         <section class="highScores">
             <h2>High Scores</h2>
-            <span class="evenRow">1. AB - 22</span>
-            <span class="oddRow">2. NJ - 21</span>
+            <div class="scoresList">
+                <span>1. AB - 22</span>
+                <span>2. NJ - 21</span>
+                <span>2. NJ - 21</span>
+            </div>
+            <button>Go Back</button><button>Clear High Scores</button>
         </section>
     </main>
 

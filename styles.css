@@ -1,5 +1,6 @@
 :root {
     --purple: #332273;
+    --lightPurple: #D6D2E8;
     --pink: #A860E2;
     --gray: #AAAAAA;
 }
@@ -16,16 +17,19 @@ a {
 }
 /* Start Page Styling */
 
-.quizContent{
+.startPage{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     margin-inline: 2rem;
 }
-/* Start Button Styling */
+.startPage p{
+    max-width:40rem;
+}
+/* Default Button Styling */
 
-.quizContent button {
+button {
     width: fit-content;
     background-color: var(--purple);
     border: none;
@@ -34,7 +38,7 @@ a {
     border-radius: 10px;
     transition-duration: 0.3s;
 }
-.quizContent button:hover {
+button:hover {
     background-color: var(--pink);
     cursor: pointer;
     transition-duration: 0.3s;
@@ -75,4 +79,11 @@ h2 .quizQuestion {
     background-color: var(--gray);
     border: none;
     height:1px;
+}
+.scoresList {
+display: flex;
+flex-direction: column;
+}
+.highScores span:nth-child(even) {
+    background-color: var(--lightPurple);
 }
