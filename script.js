@@ -4,6 +4,8 @@ const nextQButton = document.getElementById("nextQButton");
 const buttonArea = document.getElementById("buttonArea");
 const answerBtn = buttonArea.children;
 const questionContent = document.getElementById("questionContent");
+const highScoreList = document.getElementById("scoresList");
+
 nextQButton.addEventListener("click", function () { loadQuestion() });
 // store each question as an object
 const questionArray = [
@@ -74,9 +76,38 @@ function loadQuestion() {
     currentQuestion++;
     if (questionArray[currentQuestion] == undefined) {
         nextQButton.innerText = "Submit Quiz";
+        // when the user clicks "submit quiz", the finishQuiz() function will be called
+        nextQButton.addEventListener("click", function () { finishQuiz(); })
     } else {
         nextQButton.innerText = "Next Question"
     }
 }
 
-//check question number and change submit button text
+// Things to do when the user submits their quiz:
+// Save their score (to local storage?)
+// Ask the user to input their initials
+// Save their score and initials to an array array.push(userName + " - " + userScore)
+// display their score on a high score board
+// clear high scores when clear button is clicked
+
+var highScoreArray = [];
+var userName = "Test"
+var userScore = 22;
+
+// save the user score to the highScoreArray when the submit score button is clicked.
+document.getElementById("submitScoreBtn").addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); console.log("user score submitted") });
+function saveHighScore() {
+    highScoreArray.push(userName + " - " + userScore);
+}
+
+//event listener for scoreBoard Button
+document.getElementById("displayScoreboard").addEventListener("click", function () { displayScores() });
+//display each item in the array within a span item
+function displayScores() {
+    for (let i = 0; i < highScoreArray.length; i++) {
+        var scoreEntry = document.createElement("span");
+        var nameAndScore = document.createTextNode(highScoreArray[i]);
+        highScoreList.appendChild(scoreEntry);
+        scoreEntry.appendChild(nameAndScore);
+    }
+}

@@ -76,7 +76,7 @@ button:hover {
     border: none;
     height:1px;
 }
-.scoresList {
+#scoresList {
 display: flex;
 flex-direction: column;
 }
