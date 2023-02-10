@@ -71,6 +71,7 @@ function loadQuestion() {
         buttonArea.appendChild(document.createElement("button"));
         buttonArea.appendChild(document.createElement("button"));
         buttonArea.appendChild(document.createElement("button"));
+        answerListener();
     }
 
     questionContent.innerText = questionArray[currentQuestion].question;
@@ -89,21 +90,54 @@ function loadQuestion() {
 }
 
 // check if the user picked the correct answer:
-// TODO: need to define what the user clicked
-// TODO: add correct answers as integers referring to their index ex: correctAnswer: 1,
-if (userAnswerClicked === questionArray[i].correctAnswer) {
-    addPoints();
-} else {
-    wrongAnswer();
+function answerListener() {
+    answerBtn[0].addEventListener("click", function () { console.log("clicked 1st answer") })
+    answerBtn[1].addEventListener("click", function () { console.log("clicked 2nd answer") })
+    answerBtn[2].addEventListener("click", function () { console.log("clicked 3rd answer") })
+    answerBtn[3].addEventListener("click", function () { console.log("clicked 4th answer") })
 }
 
-// TODO: implement addPoints() and wrongAnswer() functions
-function addPoints() {
-    //do something
+// save high scores
+var highScoreArray = [];
+var userName = "Test"
+var userScore = 22;
+
+
+
+function finishQuiz() {
+    nextQButton.remove();
+    var userScore = 22;
+    questionContent.innerText = "All done!";
+    buttonArea.innerText = "Your final score is " + userScore + ". Enter your initials.";
+    scoreButton = document.createElement("button")
+    initialsForm = document.createElement("input");
+    buttonArea.appendChild(initialsForm);
+    buttonArea.appendChild(scoreButton);
+    scoreButton.setAttribute("id", "submitScoreBtn");
+    scoreButton.innerText = "Submit Score";
+    scoreButton.addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); console.log("user score submitted") });
+    // nextQButton.innerText = "Submit Score";
+
 }
-function wrongAnswer() {
-    // do something else
+
+function saveHighScore() {
+    highScoreArray.push(userName + " - " + userScore);
 }
+// TODO: need to define what the user clicked
+// TODO: add correct answers as integers referring to their index ex: correctAnswer: 1,
+// if (userAnswerClicked === questionArray[i].correctAnswer) {
+//     addPoints();
+// } else {
+//     wrongAnswer();
+// }
+
+// // TODO: implement addPoints() and wrongAnswer() functions
+// function addPoints() {
+//     //do something
+// }
+// function wrongAnswer() {
+//     // do something else
+// }
 
 // Things to do when the user submits their quiz:
 // Save their score (to local storage?)
@@ -112,15 +146,10 @@ function wrongAnswer() {
 // display their score on a high score board
 // clear high scores when clear button is clicked
 
-var highScoreArray = [];
-var userName = "Test"
-var userScore = 22;
+
 
 // save the user score to the highScoreArray when the submit score button is clicked.
-document.getElementById("submitScoreBtn").addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); console.log("user score submitted") });
-function saveHighScore() {
-    highScoreArray.push(userName + " - " + userScore);
-}
+
 
 document.getElementById("clearScores").addEventListener("click", function () { clearScores() });
 
