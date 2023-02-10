@@ -18,7 +18,8 @@ const questionArray = [
         answer1: "Strings",
         answer2: "booleans",
         answer3: "alerts",
-        answer4: "numbers"
+        answer4: "numbers",
+        correctAnswer: 2
         // how will you identify the correct answer?
     },
     {
@@ -26,28 +27,32 @@ const questionArray = [
         answer1: "quotes",
         answer2: "curly brackets",
         answer3: "parenthesis",
-        answer4: "square brackets"
+        answer4: "square brackets",
+        correctAnswer: 3
     },
     {
         question: "Arrays in Javascript can be used to store:",
         answer1: "numbers and strings",
         answer2: "other arrays",
         answer3: "booleans",
-        answer4: "all of the above"
+        answer4: "all of the above",
+        correctAnswer: 4
     },
     {
         question: "String values must be closed within _____ when being assigned to variables.",
         answer1: "Commas",
         answer2: "Curly Brackets",
         answer3: "Quotes",
-        answer4: "Parenthesis"
+        answer4: "Parenthesis",
+        correctAnswer: 3
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
         answer1: "Javascript",
         answer2: "Terminal/Bash",
         answer3: "For loops",
-        answer4: "console.log"
+        answer4: "console.log",
+        correctAnswer: 4
     }
 ];
 
@@ -83,6 +88,23 @@ function loadQuestion() {
     }
 }
 
+// check if the user picked the correct answer:
+// TODO: need to define what the user clicked
+// TODO: add correct answers as integers referring to their index ex: correctAnswer: 1,
+if (userAnswerClicked === questionArray[i].correctAnswer) {
+    addPoints();
+} else {
+    wrongAnswer();
+}
+
+// TODO: implement addPoints() and wrongAnswer() functions
+function addPoints() {
+    //do something
+}
+function wrongAnswer() {
+    // do something else
+}
+
 // Things to do when the user submits their quiz:
 // Save their score (to local storage?)
 // Ask the user to input their initials
@@ -98,6 +120,13 @@ var userScore = 22;
 document.getElementById("submitScoreBtn").addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); console.log("user score submitted") });
 function saveHighScore() {
     highScoreArray.push(userName + " - " + userScore);
+}
+
+document.getElementById("clearScores").addEventListener("click", function () { clearScores() });
+
+function clearScores() {
+    highScoreArray = [];
+    highScoreList.innerHTML = "";
 }
 
 //event listener for scoreBoard Button
