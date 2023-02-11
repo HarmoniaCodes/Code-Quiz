@@ -4,7 +4,7 @@ const nextQButton = document.getElementById("nextQButton");
 const buttonArea = document.getElementById("buttonArea");
 const answerBtn = buttonArea.children;
 const questionContent = document.getElementById("questionContent");
-const highScoreList = document.getElementById("scoresList");
+
 
 nextQButton.addEventListener("click", function () { loadQuestion() });
 // store each question as an object
@@ -82,8 +82,8 @@ function loadQuestion() {
     currentQuestion++;
     if (questionArray[currentQuestion] == undefined) {
         nextQButton.innerText = "Submit Quiz";
-        // when the user clicks "submit quiz", the finishQuiz() function will be called
-        nextQButton.addEventListener("click", function () { finishQuiz(); })
+        // when the user clicks "submit quiz", the createScoreEntry() function will be called
+        nextQButton.addEventListener("click", function () { createScoreEntry(); })
     } else {
         nextQButton.innerText = "Next Question"
     }
@@ -103,27 +103,66 @@ var userName = "Test"
 var userScore = 22;
 
 
-
-function finishQuiz() {
+// remove quiz elements, create the "save high score" screen
+function createScoreEntry() {
     nextQButton.remove();
-    var userScore = 22;
     questionContent.innerText = "All done!";
     buttonArea.innerText = "Your final score is " + userScore + ". Enter your initials.";
     scoreButton = document.createElement("button")
     initialsForm = document.createElement("input");
     buttonArea.appendChild(initialsForm);
+    initialsForm.setAttribute("id", "initialsForm");
     buttonArea.appendChild(scoreButton);
     scoreButton.setAttribute("id", "submitScoreBtn");
     scoreButton.innerText = "Submit Score";
-    scoreButton.addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); console.log("user score submitted") });
-    // nextQButton.innerText = "Submit Score";
-
+    scoreButton.addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); });
 }
-
+// push user initials and score into the highScoreArray
+// TODO : Save this array in local storage so that it is not deleted on reload
 function saveHighScore() {
-    highScoreArray.push(userName + " - " + userScore);
+    highScoreArray.push(initialsForm.value + " - " + userScore);
+    displayScores();
 }
-// TODO: need to define what the user clicked
+
+//display each item in the array within a span item
+function displayScores() {
+    if (highScoreArray.length === 0) {
+        alert("No high scores yet! Play a game first.")
+    } else {
+        buttonArea.innerHTML = "";
+        questionContent.innerText = "High Scores";
+        const highScoreList = document.createElement("section");
+        highScoreList.setAttribute("id", "highScoreList");
+        quizArea.appendChild(highScoreList);
+        //remove score submission elements
+        initialsForm.remove();
+        scoreButton.remove();
+        // create high score page elements
+
+        // BUG - high score page is created each time "view high scores" page is clicked
+        // need to check if it already exists
+        for (let i = 0; i < highScoreArray.length; i++) {
+            var scoreEntry = document.createElement("span");
+            var nameAndScore = document.createTextNode(highScoreArray[i]);
+            highScoreList.appendChild(scoreEntry);
+            scoreEntry.appendChild(nameAndScore);
+        }
+        const restartBtn = document.createElement("button");
+        quizArea.appendChild(restartBtn);
+        restartBtn.innerText = "Play Again";
+        restartBtn.addEventListener("click", function () { location.reload(); });
+        const clearScoresBtn = document.createElement("button");
+        quizArea.appendChild(clearScoresBtn);
+        clearScoresBtn.innerText = "Clear High Scores";
+        clearScoresBtn.addEventListener("click", function () { clearScores(); });
+    }
+}
+function clearScores() {
+    var highScoreList = document.getElementById("highScoreList");
+    highScoreArray = [];
+    highScoreList.textContent = "";
+    console.log("Cleared Scores");
+}
 // TODO: add correct answers as integers referring to their index ex: correctAnswer: 1,
 // if (userAnswerClicked === questionArray[i].correctAnswer) {
 //     addPoints();
@@ -145,27 +184,3 @@ function saveHighScore() {
 // Save their score and initials to an array array.push(userName + " - " + userScore)
 // display their score on a high score board
 // clear high scores when clear button is clicked
-
-
-
-// save the user score to the highScoreArray when the submit score button is clicked.
-
-
-document.getElementById("clearScores").addEventListener("click", function () { clearScores() });
-
-function clearScores() {
-    highScoreArray = [];
-    highScoreList.innerHTML = "";
-}
-
-//event listener for scoreBoard Button
-document.getElementById("displayScoreboard").addEventListener("click", function () { displayScores() });
-//display each item in the array within a span item
-function displayScores() {
-    for (let i = 0; i < highScoreArray.length; i++) {
-        var scoreEntry = document.createElement("span");
-        var nameAndScore = document.createTextNode(highScoreArray[i]);
-        highScoreList.appendChild(scoreEntry);
-        scoreEntry.appendChild(nameAndScore);
-    }
-}
