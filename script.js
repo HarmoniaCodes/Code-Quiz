@@ -14,87 +14,105 @@ const questionArray = [
         startDesc: "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!"
     },
     {
-        question: "Commonly Used Data Types DO NOT Include:",
-        answer1: "Strings",
-        answer2: "booleans",
-        answer3: "alerts",
-        answer4: "numbers",
-        correctAnswer: 2
+        question: "1. Commonly Used Data Types DO NOT Include:",
+        a: "Strings",
+        b: "booleans",
+        c: "alerts",
+        d: "numbers",
+        correctAnswer: "c"
         // how will you identify the correct answer?
     },
     {
-        question: "The condition in an if/else statement is enclosed with _____.",
-        answer1: "quotes",
-        answer2: "curly brackets",
-        answer3: "parenthesis",
-        answer4: "square brackets",
-        correctAnswer: 3
+        question: "2. The condition in an if/else statement is enclosed with _____.",
+        a: "quotes",
+        b: "curly brackets",
+        c: "parenthesis",
+        d: "square brackets",
+        correctAnswer: "c"
     },
     {
-        question: "Arrays in Javascript can be used to store:",
-        answer1: "numbers and strings",
-        answer2: "other arrays",
-        answer3: "booleans",
-        answer4: "all of the above",
-        correctAnswer: 4
+        question: "3. Arrays in Javascript can be used to store:",
+        a: "numbers and strings",
+        b: "other arrays",
+        c: "booleans",
+        d: "all of the above",
+        correctAnswer: "d"
     },
     {
-        question: "String values must be closed within _____ when being assigned to variables.",
-        answer1: "Commas",
-        answer2: "Curly Brackets",
-        answer3: "Quotes",
-        answer4: "Parenthesis",
-        correctAnswer: 3
+        question: "4. String values must be closed within _____ when being assigned to variables.",
+        a: "Commas",
+        b: "Curly Brackets",
+        c: "Quotes",
+        d: "Parenthesis",
+        correctAnswer: "c"
     },
     {
-        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
-        answer1: "Javascript",
-        answer2: "Terminal/Bash",
-        answer3: "For loops",
-        answer4: "console.log",
-        correctAnswer: 4
+        question: "5. A very useful tool used during development and debugging for printing content to the debugger is:",
+        a: "Javascript",
+        b: "Terminal/Bash",
+        c: "For loops",
+        d: "console.log",
+        correctAnswer: "d"
     }
 ];
 
+// show the default message on page load
 function defaultMessage() {
     questionContent.innerText = questionArray[0].startHeader;
     buttonArea.innerText = questionArray[0].startDesc;
 }
 defaultMessage();
 
+// then set the current question to 1
 var currentQuestion = 1;
 
+// load quiz elements when loadQuestion() is called
 function loadQuestion() {
+
+    // check if chosen answer is correct
+    buttonArea.addEventListener("click", function (event) {
+        const userAnswer = event.target;
+        if (userAnswer.id === questionArray[currentQuestion].correctAnswer) {
+            console.log("Correct answer clicked")
+        } else {
+            console.log("incorrect answer clicked")
+        }
+    })
+
+    console.log(currentQuestion);
+    console.log("correct answer: " + questionArray[currentQuestion].correctAnswer);
     if (currentQuestion === 1) {
+        // load answer buttons and listeners
         buttonArea.innerText = "";
-        buttonArea.appendChild(document.createElement("button"));
-        buttonArea.appendChild(document.createElement("button"));
-        buttonArea.appendChild(document.createElement("button"));
-        buttonArea.appendChild(document.createElement("button"));
-        answerListener();
+        const mkBtn1 = document.createElement("button");
+        const mkBtn2 = document.createElement("button");
+        const mkBtn3 = document.createElement("button");
+        const mkBtn4 = document.createElement("button");
+        buttonArea.appendChild(mkBtn1);
+        mkBtn1.setAttribute("id", "a");
+        buttonArea.appendChild(mkBtn2);
+        mkBtn2.setAttribute("id", "b");
+        buttonArea.appendChild(mkBtn3);
+        mkBtn3.setAttribute("id", "c");
+        buttonArea.appendChild(mkBtn4);
+        mkBtn4.setAttribute("id", "d");
     }
 
     questionContent.innerText = questionArray[currentQuestion].question;
-    answerBtn[0].innerText = questionArray[currentQuestion].answer1;
-    answerBtn[1].innerText = questionArray[currentQuestion].answer2;
-    answerBtn[2].innerText = questionArray[currentQuestion].answer3;
-    answerBtn[3].innerText = questionArray[currentQuestion].answer4;
-    currentQuestion++;
+    answerBtn[0].innerText = questionArray[currentQuestion].a;
+    answerBtn[1].innerText = questionArray[currentQuestion].b;
+    answerBtn[2].innerText = questionArray[currentQuestion].c;
+    answerBtn[3].innerText = questionArray[currentQuestion].d;
+
+
     if (questionArray[currentQuestion] == undefined) {
         nextQButton.innerText = "Submit Quiz";
         // when the user clicks "submit quiz", the createScoreEntry() function will be called
         nextQButton.addEventListener("click", function () { createScoreEntry(); })
     } else {
+        currentQuestion++;
         nextQButton.innerText = "Next Question"
     }
-}
-
-// check if the user picked the correct answer:
-function answerListener() {
-    answerBtn[0].addEventListener("click", function () { console.log("clicked 1st answer") })
-    answerBtn[1].addEventListener("click", function () { console.log("clicked 2nd answer") })
-    answerBtn[2].addEventListener("click", function () { console.log("clicked 3rd answer") })
-    answerBtn[3].addEventListener("click", function () { console.log("clicked 4th answer") })
 }
 
 // save high scores
@@ -163,20 +181,6 @@ function clearScores() {
     highScoreList.textContent = "";
     console.log("Cleared Scores");
 }
-// TODO: add correct answers as integers referring to their index ex: correctAnswer: 1,
-// if (userAnswerClicked === questionArray[i].correctAnswer) {
-//     addPoints();
-// } else {
-//     wrongAnswer();
-// }
-
-// // TODO: implement addPoints() and wrongAnswer() functions
-// function addPoints() {
-//     //do something
-// }
-// function wrongAnswer() {
-//     // do something else
-// }
 
 // Things to do when the user submits their quiz:
 // Save their score (to local storage?)
