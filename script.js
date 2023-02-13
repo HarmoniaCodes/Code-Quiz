@@ -4,9 +4,9 @@ const nextQButton = document.getElementById("nextQButton");
 const buttonArea = document.getElementById("buttonArea");
 const answerBtn = buttonArea.children;
 const questionContent = document.getElementById("questionContent");
+const answerStatus = document.getElementById("answerStatus");
+const timeLeftArea = document.getElementById("timeLeftArea");
 
-
-nextQButton.addEventListener("click", function () { loadQuestion() });
 // store each question as an object
 const questionArray = [
     {
@@ -64,61 +64,73 @@ function defaultMessage() {
 defaultMessage();
 
 // then set the current question to 1
-var currentQuestion = 1;
+var currentQuestion = 0;
 
+// create timer for quiz
+var timeLeft = 75;
+var countdown = setInterval(function () {
+    timeLeft--;
+    timeLeftArea.innerText = timeLeft;
+    if (timeLeft <= 0) {
+        clearInterval(countdown);
+    }
+    return timeLeft;
+}, 1000);
+
+
+// add event listener to the nextQButton element
+nextQButton.addEventListener("click", function () { currentQuestion++; loadQuestion() });
 // load quiz elements when loadQuestion() is called
 function loadQuestion() {
-
-    // check if chosen answer is correct
-    buttonArea.addEventListener("click", function (event) {
-        const userAnswer = event.target;
-        if (userAnswer.id === questionArray[currentQuestion].correctAnswer) {
-            console.log("Correct answer clicked")
-        } else {
-            console.log("incorrect answer clicked")
-        }
-    })
-
-    console.log(currentQuestion);
-    console.log("correct answer: " + questionArray[currentQuestion].correctAnswer);
-    if (currentQuestion === 1) {
-        // load answer buttons and listeners
-        buttonArea.innerText = "";
-        const mkBtn1 = document.createElement("button");
-        const mkBtn2 = document.createElement("button");
-        const mkBtn3 = document.createElement("button");
-        const mkBtn4 = document.createElement("button");
-        buttonArea.appendChild(mkBtn1);
-        mkBtn1.setAttribute("id", "a");
-        buttonArea.appendChild(mkBtn2);
-        mkBtn2.setAttribute("id", "b");
-        buttonArea.appendChild(mkBtn3);
-        mkBtn3.setAttribute("id", "c");
-        buttonArea.appendChild(mkBtn4);
-        mkBtn4.setAttribute("id", "d");
-    }
+    // console.log(currentQuestion);
+    // console.log("correct answer: " + questionArray[currentQuestion].correctAnswer);
+    if (currentQuestion < 6 ? createQuizButtons() : createScoreEntry());
 
     questionContent.innerText = questionArray[currentQuestion].question;
     answerBtn[0].innerText = questionArray[currentQuestion].a;
     answerBtn[1].innerText = questionArray[currentQuestion].b;
     answerBtn[2].innerText = questionArray[currentQuestion].c;
     answerBtn[3].innerText = questionArray[currentQuestion].d;
+    validateAnswer();
 
-
-    if (questionArray[currentQuestion] == undefined) {
-        nextQButton.innerText = "Submit Quiz";
-        // when the user clicks "submit quiz", the createScoreEntry() function will be called
-        nextQButton.addEventListener("click", function () { createScoreEntry(); })
-    } else {
-        currentQuestion++;
-        nextQButton.innerText = "Next Question"
-    }
+    if (currentQuestion == 5 ? nextQButton.innerText = "Submit Quiz" : nextQButton.innerText = "Next Question");
 }
+
+function createQuizButtons() {
+    // load answer buttons and listeners
+    buttonArea.innerText = "";
+    const mkBtn1 = document.createElement("button");
+    const mkBtn2 = document.createElement("button");
+    const mkBtn3 = document.createElement("button");
+    const mkBtn4 = document.createElement("button");
+    buttonArea.appendChild(mkBtn1);
+    mkBtn1.setAttribute("id", "a");
+    buttonArea.appendChild(mkBtn2);
+    mkBtn2.setAttribute("id", "b");
+    buttonArea.appendChild(mkBtn3);
+    mkBtn3.setAttribute("id", "c");
+    buttonArea.appendChild(mkBtn4);
+    mkBtn4.setAttribute("id", "d");
+}
+
+function validateAnswer() {
+    buttonArea.addEventListener("click", function (event) {
+        const userAnswer = event.target;
+        if (userAnswer.id === questionArray[currentQuestion].correctAnswer) {
+            console.log("Correct answer clicked")
+            answerStatus.innerText = "Correct!";
+        } else {
+            console.log("incorrect answer clicked")
+            answerStatus.innerText = "Wrong!";
+            timeLeft = (timeLeft - 10);
+        }
+    })
+}
+
 
 // save high scores
 var highScoreArray = [];
-var userName = "Test"
-var userScore = 22;
+var userScore = timeLeft;
 
 
 // remove quiz elements, create the "save high score" screen
@@ -188,3 +200,5 @@ function clearScores() {
 // Save their score and initials to an array array.push(userName + " - " + userScore)
 // display their score on a high score board
 // clear high scores when clear button is clicked
+
+
