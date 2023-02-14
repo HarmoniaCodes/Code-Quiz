@@ -129,6 +129,7 @@ function createQuizButtons() {
 }
 
 //check if the user answered correctly
+answerStatus.innerText = "";
 function validateAnswer() {
     buttonArea.addEventListener("click", function (event) {
         const userAnswer = event.target;
@@ -139,7 +140,7 @@ function validateAnswer() {
             loadQuestion();
         } else if (userAnswer.type === "submit" && currentQuestion < 6 && userAnswer.id !== questionArray[currentQuestion].correctAnswer) {
             document.getElementById(userAnswer.id).style.backgroundColor = "red";
-            console.log("incorrect answer clicked")
+            answerStatus.classList.toggle("answerWrong");
             answerStatus.innerText = "Wrong! -10 points.";
             timeLeft = (timeLeft - 10);
         }
