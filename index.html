@@ -19,53 +19,24 @@
 <body>
     <header>
         <nav>
-            <a href="#">View High Scores</a>
+            <a href="javascript:displayScores()">View High Scores</a>
         </nav>
-        <div class="timeLeftCounter">
-            Time: 0
+        <div id="timeLeftArea">
         </div>
     </header>
     <main>
-        <section class="startPage">
-            <h1>Coding Quiz Challenge</h1>
-            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect
-                answers
-                will penalize your score/time by ten seconds!</p>
-            <button>Start Quiz</button>
-        </section>
-        <hr>
-        <section class="quizQuestion">
-            <h2>Commonly Used Data Types DO NOT include:</h2>
-            <button>1. Strings</button>
-            <button>1. Strings</button>
-            <button>1. Strings</button>
-            <button>1. Strings</button>
+        <section id="quizArea">
+            <h1 id="questionContent"></h1>
+            <div id="buttonArea">
+            </div>
+            <p></p>
+            <button id="nextQButton">Start Quiz</button>
+
         </section>
         <figcaption class="answerResult">
             <hr>
-            <span>Wrong!</span>
-            <span>Correct!</span>
+            <span id="answerStatus"></span>
         </figcaption>
-        <hr>
-        <section class="resultsPage">
-            <h2>All Done!</h2>
-            <span>Your final score is 22.</span><br />
-            <form>
-                <label for="initials">Enter your initials:</label>
-                <input type="text" id="initials" />
-                <button>Submit</button>
-            </form>
-        </section>
-        <hr>
-        <section class="highScores">
-            <h2>High Scores</h2>
-            <div class="scoresList">
-                <span>1. AB - 22</span>
-                <span>2. NJ - 21</span>
-                <span>2. NJ - 21</span>
-            </div>
-            <button>Go Back</button><button>Clear High Scores</button>
-        </section>
     </main>
 
 </body>
