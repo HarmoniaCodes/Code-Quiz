@@ -6,6 +6,8 @@ const answerBtn = buttonArea.children;
 const questionContent = document.getElementById("questionContent");
 const answerStatus = document.getElementById("answerStatus");
 const timeLeftArea = document.getElementById("timeLeftArea");
+// create an array to store the high scores in local storage.
+// if it doesn't exist, create empty array
 const highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
 
 // store each question as an object
@@ -21,7 +23,6 @@ const questionArray = [
         c: "alerts",
         d: "numbers",
         correctAnswer: "c"
-        // how will you identify the correct answer?
     },
     {
         question: "2. The condition in an if/else statement is enclosed with _____.",
@@ -77,28 +78,30 @@ function startTimer() {
         timeLeftArea.innerText = timeLeft;
         if (currentQuestion > 5) {
             clearInterval(countdown);
-        } else if (timeLeft <= 0) {
+        } else if (document.getElementById("highScoreList") !== null) { clearInterval(countdown); timeLeftArea.innerText = "" }
+        else if (timeLeft <= 0) {
             clearInterval(countdown);
             alert("Time's up! You failed the quiz. Try again!")
-            location.reload;
+            window.location.reload();
         }
     }, 1000);
-    // return timeLeft;
 }
 
 
 // add event listener to the nextQButton element
 nextQButton.addEventListener("click", function () { startQuiz() });
+// add listener for correct/incorrect answer
 answerBtn.addEventListener("click", validateAnswer());
+
+// if the user starts the first question, start the timer
+// otherwise, load next question
 function startQuiz() {
     nextQButton.remove();
     if (currentQuestion === 0) { startTimer(); currentQuestion++; loadQuestion() }
     else { currentQuestion++; loadQuestion() }
 }
-// load quiz elements when loadQuestion() is called
+// load the current question
 function loadQuestion() {
-    // console.log(currentQuestion);
-    // console.log("correct answer: " + questionArray[currentQuestion].correctAnswer);
     if (currentQuestion < 6 ? createQuizButtons() : createScoreEntry());
     if (currentQuestion < 6) {
         questionContent.innerText = questionArray[currentQuestion].question;
@@ -108,9 +111,8 @@ function loadQuestion() {
         answerBtn[3].innerText = questionArray[currentQuestion].d;
     }
 }
-
+// create the quiz answer buttons
 function createQuizButtons() {
-    // load answer buttons and listeners
     buttonArea.innerText = "";
     const mkBtn1 = document.createElement("button");
     const mkBtn2 = document.createElement("button");
@@ -125,6 +127,7 @@ function createQuizButtons() {
     buttonArea.appendChild(mkBtn4);
     mkBtn4.setAttribute("id", "d");
 }
+
 //check if the user answered correctly
 function validateAnswer() {
     buttonArea.addEventListener("click", function (event) {
@@ -137,7 +140,7 @@ function validateAnswer() {
         } else if (userAnswer.type === "submit" && currentQuestion < 6 && userAnswer.id !== questionArray[currentQuestion].correctAnswer) {
             document.getElementById(userAnswer.id).style.backgroundColor = "red";
             console.log("incorrect answer clicked")
-            answerStatus.innerText = "Wrong!";
+            answerStatus.innerText = "Wrong! -10 points.";
             timeLeft = (timeLeft - 10);
         }
     })
@@ -158,7 +161,7 @@ function createScoreEntry() {
     scoreButton.innerText = "Submit Score";
     scoreButton.addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); });
 }
-// push user initials and score into the highScoreArray
+// push user name entry and score into the highScoreArray
 function saveHighScore() {
     console.log("a high score was saved");
     scoreboardEntry = {
@@ -171,9 +174,12 @@ function saveHighScore() {
     displayScores();
 }
 
-//display each item in the array within a span item
+// set up high scores page
 function displayScores() {
-    if (localStorage.getItem("highScores") === null) {
+    // if ( && document.getElementById("nextQButton") !== null) {
+    //     nextQButton.remove();
+    // }
+    if (document.getElementById("highScoreList") == null && localStorage.getItem("highScores") === null) {
         alert("No high scores yet! Play a game first.")
     } else if (document.getElementById("highScoreList") == null) {
         // create high score page elements
@@ -186,11 +192,11 @@ function displayScores() {
         if (document.getElementById("initialsForm") !== null) {
             initialsForm.remove();
             scoreButton.remove();
-        } else { console.log("displaying high scores") }
+        } else { console.log("displaying high scores"); nextQButton.remove(); }
 
 
-        // BUG - high score page is created each time "view high scores" page is clicked
-        // need to check if it already exists
+        // loop through all entries and create a span element for them
+        // then place the highscoreList entry inside of the span
         for (let i = 0; i < highScoreArray.length; i++) {
             var scoreEntry = document.createElement("span");
             var nameAndScore = document.createTextNode(JSON.stringify(highScoreArray[i].username) + "-" + JSON.stringify(highScoreArray[i].userscore));
@@ -209,16 +215,10 @@ function displayScores() {
         console.log("already viewing high scores")
     }
 }
+// clear the high score list
 function clearScores() {
     localStorage.clear("highscoreList");
-    console.log("Cleared Scores");
+    alert("Cleared Scores");
+    window.location.reload();
 }
-
-// Things to do when the user submits their quiz:
-// Save their score (to local storage?)
-// Ask the user to input their initials
-// Save their score and initials to an array array.push(userName + " - " + userScore)
-// display their score on a high score board
-// clear high scores when clear button is clicked
-
 
