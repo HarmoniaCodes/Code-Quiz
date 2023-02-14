@@ -76,10 +76,10 @@ button:hover {
     border: none;
     height:1px;
 }
-#scoresList {
+#highScoreList{
 display: flex;
 flex-direction: column;
 }
-.highScores span:nth-child(even) {
+#highScoreList span:nth-child(even) {
     background-color: var(--lightPurple);
 }
