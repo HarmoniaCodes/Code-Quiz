@@ -6,6 +6,7 @@ const answerBtn = buttonArea.children;
 const questionContent = document.getElementById("questionContent");
 const answerStatus = document.getElementById("answerStatus");
 const timeLeftArea = document.getElementById("timeLeftArea");
+const highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
 
 // store each question as an object
 const questionArray = [
@@ -79,6 +80,7 @@ function startTimer() {
         } else if (timeLeft <= 0) {
             clearInterval(countdown);
             alert("Time's up! You failed the quiz. Try again!")
+            location.reload;
         }
     }, 1000);
     // return timeLeft;
@@ -87,8 +89,9 @@ function startTimer() {
 
 // add event listener to the nextQButton element
 nextQButton.addEventListener("click", function () { startQuiz() });
-
+answerBtn.addEventListener("click", validateAnswer());
 function startQuiz() {
+    nextQButton.remove();
     if (currentQuestion === 0) { startTimer(); currentQuestion++; loadQuestion() }
     else { currentQuestion++; loadQuestion() }
 }
@@ -103,10 +106,7 @@ function loadQuestion() {
         answerBtn[1].innerText = questionArray[currentQuestion].b;
         answerBtn[2].innerText = questionArray[currentQuestion].c;
         answerBtn[3].innerText = questionArray[currentQuestion].d;
-        validateAnswer();
     }
-    if (currentQuestion == 5 ? nextQButton.innerText = "Submit Quiz" : nextQButton.innerText = "Next Question");
-
 }
 
 function createQuizButtons() {
@@ -124,12 +124,6 @@ function createQuizButtons() {
     mkBtn3.setAttribute("id", "c");
     buttonArea.appendChild(mkBtn4);
     mkBtn4.setAttribute("id", "d");
-}
-function removeQuizButtons() {
-    answerBtn[0].remove();
-    answerBtn[1].remove();
-    answerBtn[2].remove();
-    answerBtn[3].remove();
 }
 //check if the user answered correctly
 function validateAnswer() {
@@ -149,11 +143,6 @@ function validateAnswer() {
     })
 }
 
-
-// save high scores
-const highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
-
-
 // remove quiz elements, create the "save high score" screen
 function createScoreEntry() {
     timeLeftArea.remove();
@@ -170,7 +159,6 @@ function createScoreEntry() {
     scoreButton.addEventListener("click", function (event) { event.preventDefault(); saveHighScore(); });
 }
 // push user initials and score into the highScoreArray
-// TODO : Save this array in local storage so that it is not deleted on reload
 function saveHighScore() {
     console.log("a high score was saved");
     scoreboardEntry = {
@@ -187,7 +175,7 @@ function saveHighScore() {
 function displayScores() {
     if (localStorage.getItem("highScores") === null) {
         alert("No high scores yet! Play a game first.")
-    } else {
+    } else if (document.getElementById("highScoreList") == null) {
         // create high score page elements
         buttonArea.innerHTML = "";
         questionContent.innerText = "High Scores";
@@ -217,6 +205,8 @@ function displayScores() {
         quizArea.appendChild(clearScoresBtn);
         clearScoresBtn.innerText = "Clear High Scores";
         clearScoresBtn.addEventListener("click", function () { clearScores(); });
+    } else {
+        console.log("already viewing high scores")
     }
 }
 function clearScores() {
